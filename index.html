@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandals Paradise - Romantic Footwear Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #27ae60;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #27ae60;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%2387CEEB"/><stop offset="100%" style="stop-color:%23E0F6FF"/></linearGradient></defs><rect width="1200" height="800" fill="url(%23sky)"/><polygon points="0,600 200,500 400,550 600,480 800,520 1000,450 1200,500 1200,800 0,800" fill="%2334495e"/><polygon points="0,650 150,580 300,620 450,560 600,590 750,540 900,580 1050,520 1200,560 1200,800 0,800" fill="%232c3e50"/><circle cx="100" cy="150" r="80" fill="%2327ae60" opacity="0.7"/><circle cx="300" cy="200" r="60" fill="%2327ae60" opacity="0.8"/><circle cx="500" cy="120" r="70" fill="%2327ae60" opacity="0.6"/><circle cx="700" cy="180" r="90" fill="%2327ae60" opacity="0.7"/><circle cx="900" cy="100" r="75" fill="%2327ae60" opacity="0.8"/><circle cx="1100" cy="160" r="65" fill="%2327ae60" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(39, 174, 96, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(46, 204, 113, 0.3) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+            background: linear-gradient(135deg, #219a52, #27ae60);
+        }
+
+        /* Floating Elements */
+        .floating-leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .leaf {
+            position: absolute;
+            color: #27ae60;
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .leaf:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .leaf:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .leaf:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .leaf:nth-child(4) { top: 30%; left: 70%; animation-delay: 1s; }
+        .leaf:nth-child(5) { top: 70%; left: 90%; animation-delay: 3s; }
+
+        /* Romantic Section */
+        .romantic-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .romantic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .romantic-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .romantic-card:nth-child(even) {
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+        }
+
+        .romantic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 250px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><radialGradient id="grass" cx="50%" cy="100%" r="80%"><stop offset="0%" style="stop-color:%2327ae60"/><stop offset="100%" style="stop-color:%23219a52"/></radialGradient></defs><rect width="400" height="250" fill="url(%23grass)"/><ellipse cx="200" cy="200" rx="150" ry="50" fill="%23219a52" opacity="0.8"/><path d="M 50 200 Q 80 180 110 200 T 170 200" stroke="%23ffffff" stroke-width="3" fill="none" opacity="0.7"/><path d="M 230 200 Q 260 180 290 200 T 350 200" stroke="%23ffffff" stroke-width="3" fill="none" opacity="0.7"/></svg>');
+            background-size: cover;
+        }
+
+        .couple-illustration {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .card-content p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-button {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2ecc71;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #bdc3c7;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .romantic-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">🌿 Sandals Paradise</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-leaves">
+            <div class="leaf">🍃</div>
+            <div class="leaf">🌿</div>
+            <div class="leaf">🍃</div>
+            <div class="leaf">🌿</div>
+            <div class="leaf">🍃</div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Walk in Nature's Embrace</h1>
+            <p>Discover our romantic sandal collection where every step tells a love story amidst nature's beauty</p>
+            <a href="#collection" class="cta-button">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- Romantic Section -->
+    <section class="romantic-section" id="collection">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Romantic Moments</h2>
+            <p class="section-subtitle animate-on-scroll">Where love meets comfort in every step</p>
+            
+            <div class="romantic-grid">
+                <div class="romantic-card animate-on-scroll">
+                    <div class="card-image">
+                        <div class="couple-illustration">👫</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Garden Stroll Together</h3>
+                        <p>He gently helps her choose the perfect sandals for their romantic garden walk, ensuring every step is comfortable and stylish.</p>
+                        <button class="card-button">View Collection</button>
+                    </div>
+                </div>
+
+                <div class="romantic-card animate-on-scroll">
+                    <div class="card-image">
+                        <div class="couple-illustration">👩‍❤️‍👨</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Helping Hands</h3>
+                        <p>A tender moment as he kneels to help her try on beautiful sandals, surrounded by lush greenery and blooming flowers.</p>
+                        <button class="card-button">Discover More</button>
+                    </div>
+                </div>
+
+                <div class="romantic-card animate-on-scroll">
+                    <div class="card-image">
+                        <div class="couple-illustration">💑</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Nature's Blessing</h3>
+                        <p>Finding the perfect pair together in a serene natural setting, where every choice is made with love and care.</p>
+                        <button class="card-button">Shop Now</button>
+                    </div>
+                </div>
+
+                <div class="romantic-card animate-on-scroll">
+                    <div class="card-image">
+                        <div class="couple-illustration">🌺👫</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Flower Path Walking</h3>
+                        <p>Hand in hand, they explore our sandal collection, choosing footwear for their romantic adventures through flower-filled paths.</p>
+                        <button class="card-button">Explore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Why Choose Our Sandals</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Eco-Friendly Materials</h3>
+                    <p>Crafted with sustainable materials that respect nature's beauty while providing ultimate comfort.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">💚</div>
+                    <h3>Romantic Design</h3>
+                    <p>Every pair is designed with romance in mind, perfect for couples who love to explore nature together.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">👫</div>
+                    <h3>Couple's Collection</h3>
+                    <p>Matching styles for couples who want to walk through life's adventures in perfect harmony.</p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🌺</div>
+                    <h3>Garden Approved</h3>
+                    <p>Perfect for garden parties, nature walks, and romantic outdoor adventures in any season.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Shipping Info</a>
+                <a href="#">Returns</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <p>&copy; 2024 Sandals Paradise. All rights reserved.</p>
+            <p>Where every step is a romantic journey through nature's embrace 🌿💕</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Interactive card hover effects
+        document.querySelectorAll('.romantic-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Floating leaves animation
+        function createFloatingLeaf() {
+            const leaf = document.createElement('div');
+            leaf.innerHTML = Math.random() > 0.5 ? '🍃' : '🌿';
+            leaf.style.position = 'fixed';
+            leaf.style.left = Math.random() * window.innerWidth + 'px';
+            leaf.style.top = '-50px';
+            leaf.style.fontSize = '1.5rem';
+            leaf.style.pointerEvents = 'none';
+            leaf.style.zIndex = '999';
+            leaf.style.transition = 'all 8s linear';
+            leaf.style.opacity = '0.7';
+            
+            document.body.appendChild(leaf);
+            
+            setTimeout(() => {
+                leaf.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+                leaf.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                if (leaf.parentNode) {
+                    leaf.parentNode.removeChild(leaf);
+                }
+            }, 8100);
+        }
+
+        // Create floating leaves periodically
+        setInterval(createFloatingLeaf, 4000);
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
